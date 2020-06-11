@@ -22,8 +22,7 @@ void encrypt(char* str);
 int main() {
     char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
     char* str1 = "wikipedia re ,. piola";
-    char separador_test[40] = "Donald,Trump,0"; //importante que es un arreglo y no un string literal por puntero, como strtok lo modifica.
-    char buffer_loco[30];
+    char buffer_linea[30];
     // Se extrae una linea del archivo
     FILE *fp;
     fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r");
@@ -33,9 +32,9 @@ int main() {
    }
    
     while(!feof(fp)){
-        fscanf(fp,"%s",&buffer_loco);
+        fscanf(fp,"%s",&buffer_linea);
         char* token = NULL;
-        token = strtok(buffer_loco,",");
+        token = strtok(buffer_linea,",");
         for(int i=0; token!=NULL;i++){
             printf("%d",i);
             printf( " %s\n", token );
