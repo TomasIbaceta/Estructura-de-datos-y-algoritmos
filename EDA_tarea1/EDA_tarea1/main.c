@@ -43,18 +43,8 @@ int main() {
         }    
         //printf("%s\n", buffer_loco);
     }
+    fclose(fp);
     
-    
-    //se extraen los valores de la linea. https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
-    /*
-    char* token = NULL;
-    token = strtok(separador_test,",");
-    for(int i=0; token!=NULL;i++){
-        printf("%d",i);
-        printf( " %s\n", token );
-      token = strtok(NULL,",");
-    }
-    */
     encrypt(str1);
     return 0;
 }
