@@ -20,16 +20,37 @@
 void encrypt(char* str);
 
 int main() {
-    char* test = "abcdefghiklmnopqrstuvwxyz";
+    char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
     char* str1 = "wikipedia re ,. piola";
+    char buffer_linea[30];
+    // Se extrae una linea del archivo
+    FILE *fp;
+    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r");
+    if(fp == NULL) {
+      printf("Error in opening file");
+      return(-1);
+   }
+   
+    while(!feof(fp)){
+        fscanf(fp,"%s",&buffer_linea);
+        char* token = NULL;
+        token = strtok(buffer_linea,",");
+        for(int i=0; token!=NULL;i++){
+            printf("%d",i);
+            printf( " %s\n", token );
+            token = strtok(NULL,",");
+        }    
+        //printf("%s\n", buffer_loco);
+    }
+    fclose(fp);
+    
     encrypt(str1);
     return 0;
 }
 
-
-
 void encrypt(char* str){
 
+    
     /****************************************
         1	2	3	4	5 (col)
     1	A	B	C	D	E
