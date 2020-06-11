@@ -20,13 +20,23 @@
 void encrypt(char* str);
 
 int main() {
-    char* test = "abcdefghiklmnopqrstuvwxyz";
+    char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
     char* str1 = "wikipedia re ,. piola";
+    char separador_test[40] = "Donald,Trump,0"; //importante que es un arreglo y no un string literal por puntero, como strtok lo modifica.
+    char nombre[10],Apellido[10],nota[4];
+    
+    //se extraen los valores de la linea. https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
+    char* token = NULL;
+    token = strtok(separador_test,",");
+    for(int i=0; token!=NULL;i++){
+        printf("%d",i);
+        printf( " %s\n", token );
+      token = strtok(NULL,",");
+    }
+    
     encrypt(str1);
     return 0;
 }
-
-
 
 void encrypt(char* str){
 
