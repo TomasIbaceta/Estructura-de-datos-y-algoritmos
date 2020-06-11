@@ -1,0 +1,3 @@
+1) que el cuadrado de polibio acepte la j
+-para esto, simplemente hacer que cuando esté leyendo letra por letra, si la letra es j entonces cambiarla por la letra i.
+-podría ser que las letras se guardan en una variable temporal, y que si lee j la temporal pasa i, y si no pasa la misma letra.
