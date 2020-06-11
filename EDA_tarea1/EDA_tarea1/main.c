@@ -23,8 +23,30 @@ int main() {
     char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
     char* str1 = "wikipedia re ,. piola";
     char separador_test[40] = "Donald,Trump,0"; //importante que es un arreglo y no un string literal por puntero, como strtok lo modifica.
+    char buffer_loco[30];
+    // Se extrae una linea del archivo
+    FILE *fp;
+    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r");
+    if(fp == NULL) {
+      printf("Error in opening file");
+      return(-1);
+   }
+   
+    while(!feof(fp)){
+        fscanf(fp,"%s",&buffer_loco);
+        char* token = NULL;
+        token = strtok(buffer_loco,",");
+        for(int i=0; token!=NULL;i++){
+            printf("%d",i);
+            printf( " %s\n", token );
+            token = strtok(NULL,",");
+        }    
+        //printf("%s\n", buffer_loco);
+    }
+    
     
     //se extraen los valores de la linea. https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
+    /*
     char* token = NULL;
     token = strtok(separador_test,",");
     for(int i=0; token!=NULL;i++){
@@ -32,13 +54,14 @@ int main() {
         printf( " %s\n", token );
       token = strtok(NULL,",");
     }
-    
+    */
     encrypt(str1);
     return 0;
 }
 
 void encrypt(char* str){
 
+    
     /****************************************
         1	2	3	4	5 (col)
     1	A	B	C	D	E
