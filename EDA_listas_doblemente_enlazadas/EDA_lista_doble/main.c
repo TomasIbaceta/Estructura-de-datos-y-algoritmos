@@ -25,54 +25,36 @@ typedef struct nd{
 
 //PROTOTIPOS
 int menu();
-nodo* stackPush (nodo*);
+nodo* stackPush (nodo*, int nota);
 nodo* stackPop(nodo*);
 void stackDelete(nodo*);
 void stackPrint(nodo*);
+int stackIsFull(nodo*);
 
 int main(){
-    nodo* p=NULL; //cabeza
-    int eleccion;
-    do{
-        eleccion=menu();
-        switch(eleccion){
-            case 1:p=stackPush(p);continue;
-            case 2:p=stackPop(p);break;
-            case 3:stackPrint(p);continue;
-            case 4:stackDelete(p);continue;
-            default:printf("FIN DE LAS OPERACIONES");
-        }
-    }while(eleccion<5);
-    return 0;
+    nodo* stack1=NULL;
+    int a=4;
+    stack1=stackPush(stack1, 1);
+    stack1=stackPush(stack1, 4);
+    stack1=stackPush(stack1, 5);
+    printf("is full?: %d\n", a=stackIsFull(stack1));
+    stackPrint(stack1);
+    stack1=stackPop(stack1);
+    stack1=stackPop(stack1);
+    stack1=stackPop(stack1);
+    stack1=stackPop(stack1);
+    a=stackIsFull(stack1);
+    printf("is full?: %d\n", a);
+   
 }
 
-int menu(){
-    int eleccion;
-    do{
-        printf("\n\tMENU PRINCIPAL: ");
-        printf("\t1.-Push stack /");
-        printf("\t2.-Pop stack /");
-        printf("\t3.-Stack print/");
-        printf("\t4.-Stack delete/");
-        printf("\t5.-Salir\n\t");
-        scanf("%d",&eleccion);
-    }while(eleccion<1||eleccion>5);
-    printf("--------------\n");
-    
-    return(eleccion);
-}
-
-nodo *stackPush(nodo *head){
+nodo *stackPush(nodo *head, int nota){
     nodo *p_nuevo_nodo,*aux;
-    int x;
-    putchar('\n');
-    printf("Indica el valor a introducir a la lista=>");
-    scanf("%d",&x);
     
     p_nuevo_nodo=(nodo*)malloc(sizeof(nodo));
     p_nuevo_nodo->nombre[0]='\0';
     p_nuevo_nodo->apellido[0]='\0';
-    p_nuevo_nodo->nota=x;
+    p_nuevo_nodo->nota=nota;
     p_nuevo_nodo->previous=NULL;
     p_nuevo_nodo->next=NULL;
     
@@ -126,4 +108,13 @@ void stackDelete(nodo* p){
         p=stackPop(p);
     }
     return;
+}
+
+int stackIsFull(nodo *s){
+    if (s==NULL){
+        return 0;
+    }
+    else{
+        return 1;
+    }
 }
