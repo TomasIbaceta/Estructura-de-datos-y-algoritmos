@@ -36,18 +36,18 @@ struct nd *next; //equivalente a right en ABB
 
 //PROTOTIPOS
 int menu();
-void * push (void * );
-void * eliminar(void * );
-void mostrarasc(void * );
+nodo *push (nodo *);
+nodo *pop(nodo*);
+void mostrarasc(void *);
 
 int main(){
-    void *p=NULL; //cabeza
+    nodo* p=NULL; //cabeza
     int eleccion;
     do{
         eleccion=menu();
         switch(eleccion){
             case 1:p=push(p);continue;
-            case 2:p=eliminar(p);break;
+            case 2:p=pop(p);break;
             case 3:mostrarasc(p);continue;
             default:printf("FIN DE LAS OPERACIONES");
         }
@@ -58,10 +58,10 @@ int main(){
 int menu(){
     int eleccion;
     do{
-        printf("\n\t\tMENU PRINCIPAL\n");
-        printf("\t1.-Push on stack\n");
-        printf("\t2.-Eliminar un elemento de la lista\n");
-        printf("\t3.-Mostrar ascendente\n");
+        printf("\n\t\tMENU PRINCIPAL: ");
+        printf("\t1.-Push stack /");
+        printf("\t2.-pop stack /");
+        printf("\t3.-Mostrar ascendente /");
         printf("\t4.-Salir\n");
         scanf("%d",&eleccion);
     }while(eleccion<1||eleccion>5);
@@ -70,67 +70,41 @@ int menu(){
     return(eleccion);
 }
 
-void *push(void *head){
-    nodo *nuevo_nodo,*aux;
+nodo *push(nodo *head){
+    nodo *p_nuevo_nodo,*aux;
     int x;
     putchar('\n');
     printf("Indica el valor a introducir a la lista=>");
     scanf("%d",&x);
-    nuevo_nodo=(nodo*)malloc(sizeof(nodo));
-    nuevo_nodo->nombre[0]='\0';
-    nuevo_nodo->apellido[0]='\0';
-    nuevo_nodo->nota=x;
-    nuevo_nodo->izq=NULL;
-    nuevo_nodo->der=NULL;
+    
+    p_nuevo_nodo=(nodo*)malloc(sizeof(nodo));
+    p_nuevo_nodo->nombre[0]='\0';
+    p_nuevo_nodo->apellido[0]='\0';
+    p_nuevo_nodo->nota=x;
+    p_nuevo_nodo->izq=NULL;
+    p_nuevo_nodo->der=NULL;
     
     if(head==NULL) //La lista esta vacia
-        head=nuevo_nodo;
+        head=p_nuevo_nodo;
     else{
-        aux=(nodo*)head;
-        nuevo_nodo->der=aux;
-        aux->izq=nuevo_nodo;
-        head=nuevo_nodo;   
+        aux = head;
+        p_nuevo_nodo->der=aux;
+        aux->izq=p_nuevo_nodo;
+        head=p_nuevo_nodo;   
     }
     return(head);
 }
 
-void * eliminar(void * s){
+nodo* pop(nodo* s){
     if(s==NULL)
         printf("\nLISTA VACIA\n");
     else{
-        nodo *p,* aux,*aux1;
-        int x;
-        printf("Da el elemento a eliminar=>");
-        scanf("%d",&x);
-        aux=p=(nodo*)s;
-        if(p->der==NULL && aux->nota==x) //solo hay un elemento en la lista
-            s=NULL;
-        else {
-            while(p->der!=NULL && p->nota<x){
-                aux=p;
-                p=p->der;
-            }
-            if (p!=NULL){
-                if (p->nota==x && p==s){ //No existio movimiento
-                    s=aux1=p->der;
-                    if(aux1!=NULL)
-                        aux1->izq=NULL;
-                }
-                else if(p->nota==x){
-                    aux1=aux->der=p->der;
-                    if (aux1!=NULL)
-                        aux1->izq=aux;
-                }
-                else
-                    printf("DATO NO LOCALIZADO\n");
-            }
-            else
-                printf("DATO NO ENCOTRADO\n");
-        }
-    free(p);
+        nodo *p;
+        p=s;
+        p=p->der;
+        free(s);
+        return(p);
     }
-    
-    return(s);
 }
 
 void mostrarasc(void *p){
