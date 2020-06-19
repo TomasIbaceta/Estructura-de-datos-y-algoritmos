@@ -15,30 +15,20 @@
 #include<stdlib.h>
 #define NLEN 10
 
-typedef struct Elemento{
+typedef struct nd{
     char nombre[NLEN];
     char apellido[NLEN];
     int nota;
-    struct Elemento * izq;
-    struct Elemento * der;
+    struct nd * previous; //equivalente a left en ABB
+    struct nd * next; //equivalente a right en ABB
 }nodo;
-
-
-/*
-typedef struct nd {
-char nombre[NLEN];
-char apellido[NLEN];
-int nota;
-struct nd *previous; //equivalente a left en ABB
-struct nd *next; //equivalente a right en ABB
-}nodo2;
-*/
 
 //PROTOTIPOS
 int menu();
-nodo *push (nodo *);
-nodo *pop(nodo*);
-void mostrarasc(void *);
+nodo* stackPush (nodo*);
+nodo* stackPop(nodo*);
+void stackDelete(nodo*);
+void stackPrint(nodo*);
 
 int main(){
     nodo* p=NULL; //cabeza
@@ -46,31 +36,33 @@ int main(){
     do{
         eleccion=menu();
         switch(eleccion){
-            case 1:p=push(p);continue;
-            case 2:p=pop(p);break;
-            case 3:mostrarasc(p);continue;
+            case 1:p=stackPush(p);continue;
+            case 2:p=stackPop(p);break;
+            case 3:stackPrint(p);continue;
+            case 4:stackDelete(p);continue;
             default:printf("FIN DE LAS OPERACIONES");
         }
-    }while(eleccion<4);
+    }while(eleccion<5);
     return 0;
 }
 
 int menu(){
     int eleccion;
     do{
-        printf("\n\t\tMENU PRINCIPAL: ");
+        printf("\n\tMENU PRINCIPAL: ");
         printf("\t1.-Push stack /");
-        printf("\t2.-pop stack /");
-        printf("\t3.-Mostrar ascendente /");
-        printf("\t4.-Salir\n");
+        printf("\t2.-Pop stack /");
+        printf("\t3.-Stack print/");
+        printf("\t4.-Stack delete/");
+        printf("\t5.-Salir\n\t");
         scanf("%d",&eleccion);
     }while(eleccion<1||eleccion>5);
-    printf("\n--------------\n");
+    printf("--------------\n");
     
     return(eleccion);
 }
 
-nodo *push(nodo *head){
+nodo *stackPush(nodo *head){
     nodo *p_nuevo_nodo,*aux;
     int x;
     putchar('\n');
@@ -81,33 +73,42 @@ nodo *push(nodo *head){
     p_nuevo_nodo->nombre[0]='\0';
     p_nuevo_nodo->apellido[0]='\0';
     p_nuevo_nodo->nota=x;
-    p_nuevo_nodo->izq=NULL;
-    p_nuevo_nodo->der=NULL;
+    p_nuevo_nodo->previous=NULL;
+    p_nuevo_nodo->next=NULL;
     
     if(head==NULL) //La lista esta vacia
         head=p_nuevo_nodo;
     else{
         aux = head;
-        p_nuevo_nodo->der=aux;
-        aux->izq=p_nuevo_nodo;
+        p_nuevo_nodo->next=aux;
+        aux->previous=p_nuevo_nodo;
         head=p_nuevo_nodo;   
     }
     return(head);
 }
 
-nodo* pop(nodo* s){
+nodo* stackPop(nodo* s){
     if(s==NULL)
         printf("\nLISTA VACIA\n");
     else{
         nodo *p;
         p=s;
-        p=p->der;
-        free(s);
+        if((p->next) == NULL){
+            p=NULL;
+            free(s);
+            printf("lista ahora vacía\n");
+            return p;
+        }
+        else{
+            p=p->next;
+            free(s);
+            stackPrint(p);
+        }   
         return(p);
     }
 }
 
-void mostrarasc(void *p){
+void stackPrint(nodo* p){
     nodo *s;
     s=(nodo *)p;
     if (p==NULL)
@@ -115,7 +116,14 @@ void mostrarasc(void *p){
     else
         do{
             printf("%d\n",s->nota);
-            s=s->der;
+            s=s->next;
         }while(s!=NULL);
         printf("---\n");
+}
+
+void stackDelete(nodo* p){
+    while(p!=NULL){
+        p=stackPop(p);
+    }
+    return;
 }
