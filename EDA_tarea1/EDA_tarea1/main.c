@@ -19,6 +19,7 @@ int main() {
     // Se extrae una linea del archivo
     FILE *fp;
     fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r"); //abre el archivo
+    //fp = fopen("notas-EDA-C1.txt","r");
     if(fp == NULL) {
       printf("Error in opening file");
       return(-1);
@@ -48,6 +49,11 @@ int main() {
 
     stackPrint(s1); //muestra todo el stack en pantalla.
     fclose(fp);
+    
+    printf("----------\n");
+    stackDelete(s1);
+    stackPrint(s1);
+    free(s1);
     return 0;
 }
 
@@ -86,6 +92,9 @@ void encrypt(char* str, char* buffer_encriptacion){
                 if( (char)toupper(str[i]) == cuadrado_de_polibio [j][k]){
                     mensaje_encriptado[i] = ((j+1)*10 + (k+1)); //(4,5) a (40+5) a 45
                 }
+                else if ( (char)toupper(str[i]) == 'J'){ //caso especial, J  utiliza directamente el codigo de I
+                    mensaje_encriptado[i] = 24;
+                }
             }
         }
         if (mensaje_encriptado[i] == -1){
@@ -100,4 +109,3 @@ void encrypt(char* str, char* buffer_encriptacion){
         strcat(buffer_encriptacion, snum);
     }     
 }
-
