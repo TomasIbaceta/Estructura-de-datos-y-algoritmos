@@ -1,16 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.c
- * Author: toman
- *
- * Created on June 2, 2020, 9:49 PM
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,10 +46,8 @@ int main() {
         }    
     }
 
-    stackPrint(s1);
-
+    stackPrint(s1); //muestra todo el stack en pantalla.
     fclose(fp);
-    
     return 0;
 }
 
@@ -113,19 +98,6 @@ void encrypt(char* str, char* buffer_encriptacion){
     for (int i=0; mensaje_encriptado[i] != -1;i++){
         snprintf(snum,4,"%d", mensaje_encriptado[i]);
         strcat(buffer_encriptacion, snum);
-    }
-    
-    
-    
-    
-    /*
-    //comprobar el cuadrado de polibio
-    for(int i=0; i<5; i++){ //por cada fila
-        for(int j=0; j<5; j++){ //por cada columna
-        printf("%d, %d: %c\n", i,j,cuadrado_de_polibio[i][j]);
-        }
-    }
-    */
-    
+    }     
 }
 
