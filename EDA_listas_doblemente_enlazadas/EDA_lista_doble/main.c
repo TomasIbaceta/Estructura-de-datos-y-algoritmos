@@ -29,6 +29,7 @@ nodo* stackPush (nodo*, int nota);
 nodo* stackPop(nodo*);
 void stackDelete(nodo*);
 void stackPrint(nodo*);
+int stackIsEmpty(nodo*);
 int stackIsFull(nodo*);
 
 int main(){
@@ -37,15 +38,14 @@ int main(){
     stack1=stackPush(stack1, 1);
     stack1=stackPush(stack1, 4);
     stack1=stackPush(stack1, 5);
-    printf("is full?: %d\n", a=stackIsFull(stack1));
+    printf("is Empty?: %d\n", a=stackIsEmpty(stack1));
     stackPrint(stack1);
     stack1=stackPop(stack1);
     stack1=stackPop(stack1);
     stack1=stackPop(stack1);
     stack1=stackPop(stack1);
-    a=stackIsFull(stack1);
-    printf("is full?: %d\n", a);
-   
+    a=stackIsEmpty(stack1);
+    printf("is empty??: %d\n", a);
 }
 
 nodo *stackPush(nodo *head, int nota){
@@ -66,6 +66,7 @@ nodo *stackPush(nodo *head, int nota){
         aux->previous=p_nuevo_nodo;
         head=p_nuevo_nodo;   
     }
+    
     return(head);
 }
 
@@ -110,11 +111,14 @@ void stackDelete(nodo* p){
     return;
 }
 
-int stackIsFull(nodo *s){
+int stackIsEmpty(nodo *s){
     if (s==NULL){
         return 0;
     }
     else{
         return 1;
     }
+}
+int stackIsFull(nodo *s){
+    return 0; //al ser implementado como lista, siempre tendrá espacio mientras la memoria del computador no se llene.
 }
