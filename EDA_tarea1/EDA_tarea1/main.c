@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "stack.h"
 #define MAX_STRING_SIZE 30
 
 void encrypt(char* str);
@@ -45,6 +46,27 @@ int main() {
     fclose(fp);
     
     encrypt(str1);
+    
+        stack_base* h = getNewStack(STACK_MAX_SIZE);
+    stackPush(h, 1);
+    stackPush(h, 4);
+    stackPush(h, 5);
+    stackPush(h, 9);
+    stackPrint(h);
+    stackPush(h, 7);
+    stackPrint(h);
+
+    stackPop(h);
+    printf("pase el stackpop\n");
+    stackPrint(h);
+    stackPop(h);
+    stackPrint(h);
+    stackPop(h);
+    stackPrint(h);
+    stackPop(h);
+    stackPrint(h);
+    stackPop(h);
+    stackPrint(h);
     return 0;
 }
 
