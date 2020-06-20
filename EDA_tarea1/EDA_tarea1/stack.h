@@ -20,6 +20,7 @@ extern "C" {
     
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #define NLEN 10
 #define STACK_MAX_SIZE 8
@@ -41,7 +42,7 @@ typedef struct stack_base{
 //PROTOTIPOS
 int menu();
 stack_base* getNewStack (int stack_size);
-void stackPush (stack_base*, int nota);
+void stackPush(stack_base*,int,char*,char*);
 void stackPop(stack_base*);
 void stackDelete(stack_base*);
 void stackPrint(stack_base*);

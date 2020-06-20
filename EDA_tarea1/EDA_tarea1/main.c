@@ -16,61 +16,66 @@
 #include <string.h>
 #include <ctype.h>
 #include "stack.h"
-#define MAX_STRING_SIZE 30
+#define MAX_STRING_SIZE 50
 
-void encrypt(char* str);
+void encrypt(char* str, char*);
 
 int main() {
     char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
     char* str1 = "wikipedia re ,. piola";
-    char buffer_linea[30];
+    char buffer_linea[MAX_STRING_SIZE];
+    char nombre[MAX_STRING_SIZE];
+    char apellido[MAX_STRING_SIZE];
+    int nota;
+    char buffer_encriptacion[MAX_STRING_SIZE];
+    
+    stack_base* s1 = getNewStack(STACK_MAX_SIZE);
+    
     // Se extrae una linea del archivo
     FILE *fp;
-    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r");
+    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r"); //abre el archivo
     if(fp == NULL) {
       printf("Error in opening file");
       return(-1);
    }
    
     while(!feof(fp)){
-        fscanf(fp,"%s",&buffer_linea);
+        fscanf(fp,"%s",&buffer_linea); 
         char* token = NULL;
-        token = strtok(buffer_linea,",");
-        for(int i=0; token!=NULL;i++){
+        
+        token = strtok(buffer_linea,","); 
+        for(int i = 0; token!=NULL; i++){
             printf("%d",i);
             printf( " %s\n", token );
+            
+            if (i == 0){ //token es nombre
+                encrypt(token, buffer_encriptacion);
+                strcpy(nombre, buffer_encriptacion);
+            }
+            else if(i == 1){ //token es apellido
+                encrypt(token, buffer_encriptacion);
+                strcpy(apellido, buffer_encriptacion);
+            }
+            else if(i==2){ //token es nota
+                nota = atoi(token);
+                stackPush(s1,nota,nombre,apellido);
+            }
+            else { //algo raro
+                printf("error inexperado\n");
+            }
             token = strtok(NULL,",");
         }    
         //printf("%s\n", buffer_loco);
     }
+
+    stackPrint(s1);
+
     fclose(fp);
     
-    encrypt(str1);
-    
-        stack_base* h = getNewStack(STACK_MAX_SIZE);
-    stackPush(h, 1);
-    stackPush(h, 4);
-    stackPush(h, 5);
-    stackPush(h, 9);
-    stackPrint(h);
-    stackPush(h, 7);
-    stackPrint(h);
-
-    stackPop(h);
-    printf("pase el stackpop\n");
-    stackPrint(h);
-    stackPop(h);
-    stackPrint(h);
-    stackPop(h);
-    stackPrint(h);
-    stackPop(h);
-    stackPrint(h);
-    stackPop(h);
-    stackPrint(h);
     return 0;
 }
 
-void encrypt(char* str){
+void encrypt(char* str, char* buffer_encriptacion){
 
     
     /****************************************
@@ -111,9 +116,17 @@ void encrypt(char* str){
             mensaje_encriptado[i] = 0;
         }
     }
+    
+    strcpy(buffer_encriptacion,"");
+    char snum[5];
     for (int i=0; mensaje_encriptado[i] != -1;i++){
-        printf("%d ", mensaje_encriptado[i]);
-    } 
+        snprintf(snum,4,"%d", mensaje_encriptado[i]);
+        strcat(buffer_encriptacion, snum);
+    }
+    
+    
+    
+    
     /*
     //comprobar el cuadrado de polibio
     for(int i=0; i<5; i++){ //por cada fila

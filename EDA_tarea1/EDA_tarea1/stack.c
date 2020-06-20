@@ -6,12 +6,12 @@
 
 #include "stack.h"
 
-void stackPush(stack_base* s1, int nota){
+void stackPush(stack_base* s1, int nota, char* nombre, char* apellido){
     nodo *p_nuevo_nodo,*aux;
     
     p_nuevo_nodo=(nodo*)malloc(sizeof(nodo));
-    p_nuevo_nodo->nombre[0]='\0';
-    p_nuevo_nodo->apellido[0]='\0';
+    strcpy(p_nuevo_nodo->nombre, nombre);
+    strcpy(p_nuevo_nodo->apellido, apellido);
     p_nuevo_nodo->nota=nota;
     p_nuevo_nodo->previous=NULL;
     p_nuevo_nodo->next=NULL;
@@ -63,7 +63,9 @@ void stackPrint(stack_base* p){
         s = s->next;
         } //recorre hasta el final del arreglo
         do{
-            printf("%d\n",s->nota);
+            printf("nombre: %s\n",s->nombre);
+            printf("apellido: %s\n",s->apellido);
+            printf("nota: %d\n",s->nota);
             s = s->previous;
         }while(s != NULL);
     
