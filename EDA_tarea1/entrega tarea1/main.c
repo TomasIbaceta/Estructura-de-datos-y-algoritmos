@@ -21,6 +21,8 @@
 void encrypt(char* str, char*);
 
 int main() {
+    char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
+    char* str1 = "wikipedia re ,. piola";
     char buffer_linea[MAX_STRING_SIZE];
     char nombre[MAX_STRING_SIZE];
     char apellido[MAX_STRING_SIZE];
@@ -37,26 +39,33 @@ int main() {
       return(-1);
    }
    
-    while(!feof(fp)){ //lee todo el archivo hasta el EOF
-        fscanf(fp,"%s",&buffer_linea); //toma una nueva linea y la guarda en buffer_linea
+    while(!feof(fp)){
+        fscanf(fp,"%s",&buffer_linea); 
         char* token = NULL;
         
-        token = strtok(buffer_linea,","); //prepara la linea para analisis
-        for(int i = 1; token!=NULL; i++){ //analiza la linea
-            if (i == 1){ //si token es el nombre, guardalo en nombre
+        token = strtok(buffer_linea,","); 
+        for(int i = 0; token!=NULL; i++){
+            printf("%d",i);
+            printf( " %s\n", token );
+            
+            if (i == 0){ //token es nombre
                 encrypt(token, buffer_encriptacion);
                 strcpy(nombre, buffer_encriptacion);
             }
-            else if(i == 2){ //si token es el apellido, guardalo en apellido
+            else if(i == 1){ //token es apellido
                 encrypt(token, buffer_encriptacion);
                 strcpy(apellido, buffer_encriptacion);
             }
-            else if(i==3){ //token es la nota, guardalo en nota
+            else if(i==2){ //token es nota
                 nota = atoi(token);
-                stackPush(s1,nota,nombre,apellido); //una vez que tenemos nombre, apellido y nota, subimos los datos al stack. 
+                stackPush(s1,nota,nombre,apellido);
+            }
+            else { //algo raro
+                printf("error inexperado\n");
             }
             token = strtok(NULL,",");
         }    
+        //printf("%s\n", buffer_loco);
     }
 
     stackPrint(s1);

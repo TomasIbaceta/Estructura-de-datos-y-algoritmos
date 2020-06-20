@@ -22,8 +22,8 @@ extern "C" {
 #include<stdlib.h>
 #include<string.h>
 
-#define NLEN 30
-#define STACK_MAX_SIZE 50
+#define NLEN 10
+#define STACK_MAX_SIZE 8
 
 typedef struct nd{
     char nombre[NLEN];
