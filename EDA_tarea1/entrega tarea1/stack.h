@@ -1,15 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   stack.h
- * Author: toman
- *
- * Created on June 19, 2020, 11:03 PM
- */
 
 #ifndef STACK_H
 #define STACK_H
@@ -22,8 +10,8 @@ extern "C" {
 #include<stdlib.h>
 #include<string.h>
 
-#define NLEN 10
-#define STACK_MAX_SIZE 8
+#define NLEN 30
+#define STACK_MAX_SIZE 50
 
 typedef struct nd{
     char nombre[NLEN];

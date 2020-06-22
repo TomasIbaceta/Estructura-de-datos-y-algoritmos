@@ -6,7 +6,7 @@
 
 #include "stack.h"
 
-void stackPush(stack_base* s1, int nota, char* nombre, char* apellido){
+void stackPush(stack_base* s, int nota, char* nombre, char* apellido){
     nodo *p_nuevo_nodo,*aux;
     
     p_nuevo_nodo=(nodo*)malloc(sizeof(nodo));
@@ -16,10 +16,15 @@ void stackPush(stack_base* s1, int nota, char* nombre, char* apellido){
     p_nuevo_nodo->previous=NULL;
     p_nuevo_nodo->next=NULL;
     
-    if(s1->base == NULL) //La lista esta vacia
-        s1->base = p_nuevo_nodo;
+    if(s->base == NULL) //La lista esta vacia
+        s->base = p_nuevo_nodo;
+    else if(stackIsFull(s)){
+        printf("ERROR: Stack is full\n");
+        return;
+    }
     else{
-        aux = s1->base;
+        s->stack_current_size++;
+        aux = s->base;
         while(aux->next != NULL){
         aux = aux->next;
         } //recorre hasta el final del arreglo
@@ -29,17 +34,17 @@ void stackPush(stack_base* s1, int nota, char* nombre, char* apellido){
     return;
 }
 
-void stackPop(stack_base* s1){
-    if(s1->base==NULL){
-        printf("\nLISTA VACIA\n");
+void stackPop(stack_base* s){
+
+    if(stackIsEmpty(s)){
+      s->base=NULL;
     }
-    else if(s1->base->next==NULL){
-        free(s1->base);
-        printf("\nlista ahora vacía\n");
+    else if(s->base->next==NULL){
+        free(s->base);
     }
     else{
         nodo* aux;
-        nodo* todelete = s1->base;
+        nodo* todelete = s->base;
         
         while(todelete->next != NULL){
         todelete = todelete->next;
@@ -48,7 +53,7 @@ void stackPop(stack_base* s1){
 
         free(todelete);
         aux->next=NULL;
-        //stackPrint(s1);
+        s->stack_current_size--;
     }
     return;
 }
@@ -56,9 +61,12 @@ void stackPop(stack_base* s1){
 void stackPrint(stack_base* p){
     nodo *s;
     s = p->base;
-    if (p->base == NULL)
-        printf("LISTA VACIA");
-    else
+    if (stackIsEmpty(p) || p->base == NULL){
+        printf("STACK VACIADO\n");
+        return;
+    }
+        
+    else{
         while(s->next != NULL){
         s = s->next;
         } //recorre hasta el final del arreglo
@@ -68,24 +76,33 @@ void stackPrint(stack_base* p){
             printf("nota: %d\n",s->nota);
             s = s->previous;
         }while(s != NULL);
-    
-        printf("---\n");
+    }
+    printf("---\n");
 }
 
-void stackDelete(stack_base* p){
-    while(p->base!=NULL){
-        stackPop(p);
+void stackDelete(stack_base* s){
+    while(s->base!=NULL){
+        stackPop(s);
     }
-    free(p);
     return;
 }
 
 int stackIsEmpty(stack_base* s){
-    return -1;
+    if(s->stack_current_size == 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
 
-int stackIsFull(stack_base *s){
-    return -1;
+int stackIsFull(stack_base* s){
+    if (s->stack_current_size >= s->stack_size){
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 stack_base* getNewStack (int stack_size){

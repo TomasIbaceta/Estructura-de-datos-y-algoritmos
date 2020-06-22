@@ -1,16 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.c
- * Author: toman
- *
- * Created on June 2, 2020, 9:49 PM
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,8 +8,6 @@
 void encrypt(char* str, char*);
 
 int main() {
-    char* polibio_test = "abcdefghiklmnopqrstuvwxyz";
-    char* str1 = "wikipedia re ,. piola";
     char buffer_linea[MAX_STRING_SIZE];
     char nombre[MAX_STRING_SIZE];
     char apellido[MAX_STRING_SIZE];
@@ -33,45 +18,41 @@ int main() {
     
     // Se extrae una linea del archivo
     FILE *fp;
-    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r"); //abre el archivo
+    fp = fopen("notas-EDA-C1.txt","r");
     if(fp == NULL) {
       printf("Error in opening file");
       return(-1);
    }
    
-    while(!feof(fp)){
-        fscanf(fp,"%s",&buffer_linea); 
+    while(!feof(fp)){ //leyendo todo el archivo hasta el EOF
+        fscanf(fp,"%s",&buffer_linea); //toma una nueva linea y la guarda en buffer_linea
         char* token = NULL;
         
-        token = strtok(buffer_linea,","); 
-        for(int i = 0; token!=NULL; i++){
-            printf("%d",i);
-            printf( " %s\n", token );
-            
-            if (i == 0){ //token es nombre
+        token = strtok(buffer_linea,","); //prepara la linea para analisis
+        for(int i = 1; token!=NULL; i++){ //analiza la linea
+            if (i == 1){ //si token es el nombre, guardalo en nombre
                 encrypt(token, buffer_encriptacion);
                 strcpy(nombre, buffer_encriptacion);
             }
-            else if(i == 1){ //token es apellido
+            else if(i == 2){ //si token es el apellido, guardalo en apellido
                 encrypt(token, buffer_encriptacion);
                 strcpy(apellido, buffer_encriptacion);
             }
-            else if(i==2){ //token es nota
+            else if(i==3){ //token es la nota, guardalo en nota
                 nota = atoi(token);
-                stackPush(s1,nota,nombre,apellido);
-            }
-            else { //algo raro
-                printf("error inexperado\n");
+                stackPush(s1,nota,nombre,apellido); //una vez que tenemos nombre, apellido y nota, subimos los datos al stack. 
             }
             token = strtok(NULL,",");
         }    
-        //printf("%s\n", buffer_loco);
     }
 
-    stackPrint(s1);
-
+    stackPrint(s1); //muestra todo el stack en pantalla.
     fclose(fp);
     
+    printf("----------\n");
+    stackDelete(s1);
+    stackPrint(s1);
+    free(s1);
     return 0;
 }
 
@@ -110,6 +91,9 @@ void encrypt(char* str, char* buffer_encriptacion){
                 if( (char)toupper(str[i]) == cuadrado_de_polibio [j][k]){
                     mensaje_encriptado[i] = ((j+1)*10 + (k+1)); //(4,5) a (40+5) a 45
                 }
+                else if ( (char)toupper(str[i]) == 'J'){ //caso especial, J  utiliza directamente el codigo de I
+                    mensaje_encriptado[i] = 24;
+                }
             }
         }
         if (mensaje_encriptado[i] == -1){
@@ -122,19 +106,5 @@ void encrypt(char* str, char* buffer_encriptacion){
     for (int i=0; mensaje_encriptado[i] != -1;i++){
         snprintf(snum,4,"%d", mensaje_encriptado[i]);
         strcat(buffer_encriptacion, snum);
-    }
-    
-    
-    
-    
-    /*
-    //comprobar el cuadrado de polibio
-    for(int i=0; i<5; i++){ //por cada fila
-        for(int j=0; j<5; j++){ //por cada columna
-        printf("%d, %d: %c\n", i,j,cuadrado_de_polibio[i][j]);
-        }
-    }
-    */
-    
+    }     
 }
-
