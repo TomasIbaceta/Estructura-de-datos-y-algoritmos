@@ -18,14 +18,13 @@ int main() {
     
     // Se extrae una linea del archivo
     FILE *fp;
-    fp = fopen("C:/Users/toman/OneDrive/Documents/GitHub/Estructura-de-datos-y-algoritmos/EDA_tarea1/notas-EDA-C1.txt","r"); //abre el archivo
-    //fp = fopen("notas-EDA-C1.txt","r");
+    fp = fopen("notas-EDA-C1.txt","r");
     if(fp == NULL) {
       printf("Error in opening file");
       return(-1);
    }
    
-    while(!feof(fp)){ //lee todo el archivo hasta el EOF
+    while(!feof(fp)){ //leyendo todo el archivo hasta el EOF
         fscanf(fp,"%s",&buffer_linea); //toma una nueva linea y la guarda en buffer_linea
         char* token = NULL;
         
